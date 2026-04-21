@@ -16,6 +16,8 @@ spec:
         app.kubernetes.io/name: tapnow
         app.kubernetes.io/part-of: tapnow
     spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
       containers:
         - name: tapnow
           image: ghcr.io/gateszhangc/tapnow:latest

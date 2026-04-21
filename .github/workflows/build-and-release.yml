@@ -170,7 +170,7 @@ jobs:
           content = path.read_text()
           updated, count = re.subn(
               r"(newTag:\s*).*$",
-              lambda match: f"{match.group(1)}{os.environ['IMAGE_TAG']}",
+              lambda match: f'{match.group(1)}"{os.environ["IMAGE_TAG"]}"',
               content,
               count=1,
               flags=re.MULTILINE,

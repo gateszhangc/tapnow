@@ -11,7 +11,7 @@ resources:
 images:
   - name: ghcr.io/gateszhangc/tapnow
     newName: ghcr.io/gateszhangc/tapnow
-    newTag: latest
+    newTag: "latest"
 
 replicas:
   - name: tapnow

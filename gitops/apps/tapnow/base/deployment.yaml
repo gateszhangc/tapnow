@@ -16,12 +16,38 @@ spec:
         app.kubernetes.io/name: tapnow
         app.kubernetes.io/part-of: tapnow
     spec:
-      imagePullSecrets:
-        - name: ghcr-pull-secret
+      volumes:
+        - name: workspace
+          emptyDir: {}
+      initContainers:
+        - name: checkout
+          image: alpine/git:latest
+          env:
+            - name: APP_REPOSITORY
+              value: https://github.com/gateszhangc/tapnow.git
+            - name: APP_REVISION
+              value: main
+          command:
+            - /bin/sh
+            - -lc
+          args:
+            - |
+              set -eu
+              git clone "${APP_REPOSITORY}" /workspace
+              cd /workspace
+              git fetch origin "${APP_REVISION}" --depth=1
+              git checkout "${APP_REVISION}"
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
       containers:
         - name: tapnow
-          image: ghcr.io/gateszhangc/tapnow:latest
+          image: node:20-alpine
           imagePullPolicy: IfNotPresent
+          workingDir: /workspace
+          command:
+            - node
+            - server.js
           ports:
             - name: http
               containerPort: 3000
@@ -49,3 +75,6 @@ spec:
             limits:
               cpu: 250m
               memory: 256Mi
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace

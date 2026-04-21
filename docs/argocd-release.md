@@ -23,7 +23,7 @@ The workflow uses its built-in `GITHUB_TOKEN` for source checkout inside the clu
 2. GitHub Actions runs Playwright browser tests.
 3. GitHub Actions applies `deploy/build-job.yaml` into the `build-jobs` namespace.
 4. The build job clones the app repo at the pushed commit and builds `ghcr.io/gateszhangc/tapnow:<git-sha>` with Kaniko.
-5. GitHub Actions checks out `gateszhangc/tapnow-gitops` and updates `apps/tapnow/overlays/prod/kustomization.yaml`.
+5. GitHub Actions checks out `gateszhangc/tapnow-gitops`, updates `apps/tapnow/overlays/prod/kustomization.yaml`, and pins `APP_REVISION` in the deployment to the released commit.
 6. ArgoCD auto-syncs `tapnow-prod` and rolls the deployment in namespace `tapnow-prod`.
 
 ## Bootstrap order
@@ -33,5 +33,4 @@ The workflow uses its built-in `GITHUB_TOKEN` for source checkout inside the clu
 3. Copy `gitops/apps` and `gitops/argocd` from this repo into `gateszhangc/tapnow-gitops`.
 4. Apply `gitops/argocd/tapnow-prod.yaml` to the cluster where ArgoCD runs.
 5. Add the required GitHub Actions secrets.
-6. Create `ghcr-pull-secret` in namespace `tapnow-prod` so the cluster can pull the private GHCR image.
-7. Point DNS for `tapnow.lol` to the production ingress.
+6. Point DNS for `tapnow.lol` to the production ingress.

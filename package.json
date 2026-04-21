@@ -1,12 +1,14 @@
 {
-  "name": "artemis-2-wallpaper",
+  "name": "tapnow-static-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Static Artemis II wallpaper site built from publicly released NASA imagery.",
+  "description": "Independent TapNow keyword site for Tapflow workflows, TapTV, and AI-native creative production.",
   "scripts": {
     "start": "node server.js",
     "test": "playwright test",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "test:ci": "playwright test --reporter=line",
+    "generate:brand": "python3 scripts/generate_brand_assets.py"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2"

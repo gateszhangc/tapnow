@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tapnow-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/gateszhangc/tapnow-gitops.git
+    targetRevision: main
+    path: apps/tapnow/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tapnow-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

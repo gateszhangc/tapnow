@@ -1,11 +1,11 @@
 {
-  "name": "Artemis II Wallpaper",
-  "short_name": "Artemis II",
-  "description": "Independent editorial collection of Artemis II wallpapers using publicly released NASA imagery with source credit.",
+  "name": "TapNow Guide",
+  "short_name": "TapNow",
+  "description": "Independent guide to TapNow, Tapflow workflows, TapTV creator programs, and AI visual production.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#050912",
-  "theme_color": "#050912",
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
   "icons": [
     {
       "src": "/assets/brand/favicon.png",

@@ -5,6 +5,7 @@ const path = require("path");
 const host = process.env.HOSTNAME || "0.0.0.0";
 const port = Number(process.env.PORT || 3000);
 const root = __dirname;
+const noCacheExtensions = new Set([".html", ".json", ".txt", ".webmanifest", ".xml"]);
 
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
@@ -16,9 +17,7 @@ const contentTypes = {
   ".png": "image/png",
   ".svg": "image/svg+xml",
   ".txt": "text/plain; charset=utf-8",
-  ".ttf": "font/ttf",
   ".webmanifest": "application/manifest+json; charset=utf-8",
-  ".webp": "image/webp",
   ".xml": "application/xml; charset=utf-8"
 };
 
@@ -48,7 +47,7 @@ const serveFile = (requestPath, response) => {
     }
 
     const ext = path.extname(resolvedPath).toLowerCase();
-    const cacheControl = ext === ".html" ? "no-cache" : "public, max-age=31536000, immutable";
+    const cacheControl = noCacheExtensions.has(ext) ? "no-cache" : "public, max-age=31536000, immutable";
 
     send(
       response,
@@ -56,6 +55,7 @@ const serveFile = (requestPath, response) => {
       {
         "Cache-Control": cacheControl,
         "Content-Type": contentTypes[ext] || "application/octet-stream",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
         "X-Content-Type-Options": "nosniff"
       },
       body
@@ -68,7 +68,16 @@ const server = http.createServer((request, response) => {
   let pathname = decodeURIComponent(url.pathname);
 
   if (pathname === "/healthz") {
-    send(response, 200, { "Content-Type": "application/json; charset=utf-8" }, JSON.stringify({ ok: true }));
+    send(
+      response,
+      200,
+      {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json; charset=utf-8",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+      },
+      JSON.stringify({ ok: true })
+    );
     return;
   }
 
@@ -80,5 +89,5 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`Static site listening on http://${host}:${port}`);
+  console.log(`TapNow static site listening on http://${host}:${port}`);
 });

@@ -173,6 +173,7 @@ jobs:
               lambda match: f"{match.group(1)}{os.environ['IMAGE_TAG']}",
               content,
               count=1,
+              flags=re.MULTILINE,
           )
           if count != 1:
               raise SystemExit(f"Expected exactly one newTag entry in {path}.")

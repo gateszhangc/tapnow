@@ -12,7 +12,7 @@ This site only integrates Google Search Console. Do not add GA4 or Microsoft Cla
 
 1. Open Google Search Console and add the Domain property `tapnow.lol`.
 2. Copy the DNS verification record that Google provides.
-3. Add the TXT or CNAME record at the DNS provider for `tapnow.lol`.
+3. Add the TXT or CNAME record in the Cloudflare DNS zone for `tapnow.lol`.
 4. Wait for DNS propagation, then click `Verify`.
 5. Keep the DNS verification record in place after verification succeeds.
 

@@ -24,7 +24,7 @@ spec:
             secretName: tapnow-build-ghcr
       initContainers:
         - name: checkout
-          image: alpine/git:2.47.0
+          image: alpine/git:latest
           env:
             - name: REPOSITORY
               value: "__REPOSITORY__"

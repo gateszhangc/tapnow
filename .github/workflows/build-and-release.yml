@@ -182,7 +182,7 @@ jobs:
           deployment_path = Path("tapnow-gitops/apps/tapnow/base/deployment.yaml")
           lines = deployment_path.read_text().splitlines()
           for index, line in enumerate(lines):
-              if line.strip() == "name: APP_REVISION":
+              if line.strip() in {"name: APP_REVISION", "- name: APP_REVISION"}:
                   lines[index + 1] = f'{lines[index + 1].split("value:")[0]}value: "{os.environ["GITHUB_SHA"]}"'
                   break
           else:

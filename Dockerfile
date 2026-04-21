@@ -1,5 +1,9 @@
 FROM node:20-alpine
 
+LABEL org.opencontainers.image.source="https://github.com/gateszhangc/tapnow"
+LABEL org.opencontainers.image.description="Independent TapNow guide for Tapflow, TapTV, and AI creative production."
+LABEL org.opencontainers.image.licenses="MIT"
+
 WORKDIR /app
 
 ENV NODE_ENV=production

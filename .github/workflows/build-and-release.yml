@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 concurrency:
   group: tapnow-release-${{ github.ref }}
@@ -74,12 +75,11 @@ jobs:
 
       - name: Create build job secrets
         env:
-          BUILD_JOB_GIT_TOKEN: ${{ secrets.BUILD_JOB_GIT_TOKEN }}
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          ACTIONS_GITHUB_TOKEN: ${{ github.token }}
+          GHCR_USERNAME: ${{ github.actor }}
         run: |
           kubectl -n "$BUILD_NAMESPACE" create secret generic tapnow-build-git-auth \
-            --from-literal=token="$BUILD_JOB_GIT_TOKEN" \
+            --from-literal=token="$ACTIONS_GITHUB_TOKEN" \
             --dry-run=client -o yaml | kubectl apply -f -
 
           mkdir -p /tmp/tapnow-ghcr
@@ -94,7 +94,7 @@ jobs:
                       "auths": {
                           "ghcr.io": {
                               "username": os.environ["GHCR_USERNAME"],
-                              "password": os.environ["GHCR_TOKEN"],
+                              "password": os.environ["ACTIONS_GITHUB_TOKEN"],
                           }
                       }
                   }

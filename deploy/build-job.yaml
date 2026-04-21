@@ -41,7 +41,7 @@ spec:
           args:
             - |
               set -eu
-              git clone "https://oauth2:${GIT_TOKEN}@github.com/${REPOSITORY}.git" /workspace
+              git clone "https://x-access-token:${GIT_TOKEN}@github.com/${REPOSITORY}.git" /workspace
               cd /workspace
               git fetch origin "${GIT_SHA}" --depth=1
               git checkout "${GIT_SHA}"

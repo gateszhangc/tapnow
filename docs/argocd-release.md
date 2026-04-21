@@ -13,10 +13,9 @@ Production route:
 ## Required GitHub Actions secrets
 
 - `KUBE_CONFIG_DATA`: base64-encoded kubeconfig for the build cluster
-- `BUILD_JOB_GIT_TOKEN`: token the in-cluster build job uses to clone the app repo
-- `GHCR_USERNAME`: GitHub Packages username
-- `GHCR_TOKEN`: GitHub Packages token with push access
 - `GITOPS_PAT`: token with push access to `gateszhangc/tapnow-gitops`
+
+The workflow uses its built-in `GITHUB_TOKEN` for source checkout inside the cluster build job and for pushing the image to GHCR.
 
 ## Release flow
 
